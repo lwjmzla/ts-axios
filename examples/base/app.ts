@@ -1,126 +1,139 @@
 import axios from '../../src/index'
+// import axios from 'axios'
 
-axios({
-  method: 'get',
-  url: '/base/get',
-  params: {
-    foo: ['bar', 'baz']
-  }
-})
+// axios({
+//   method: 'get',
+//   url: '/base/get',
+//   params: {
+//     foo: ['bar', 'baz']
+//   }
+// })
 
-axios({
-  method: 'get',
-  url: '/base/get',
-  params: {
-    food: [
-      { id: 1, name: 'food1' },
-      { id: 2, name: 'food2' }
-    ]
-  }
-})
+// axios({
+//   method: 'get',
+//   url: '/base/get',
+//   params: {
+//     food: [
+//       { id: 1, name: 'food1' },
+//       { id: 2, name: 'food2' }
+//     ]
+//   }
+// })
 
-axios({
-  method: 'get',
-  url: '/base/get',
-  params: {
-    foo: {
-      bar: 'baz'
-    }
-  }
-})
+// axios({
+//   method: 'get',
+//   url: '/base/get',
+//   headers: { // !1.相当于get情况的时候没data的，人家手动设置 也删除
+//     'content-type': 'application/json;charset=utf-8'
+//   },
+//   params: {
+//     foo: {
+//       bar: 'baz'
+//     }
+//   }
+// })
 
-const date = new Date()
+// const date = new Date()
 
-axios({
-  method: 'get',
-  url: '/base/get',
-  params: {
-    date
-  }
-})
+// axios({
+//   method: 'get',
+//   url: '/base/get',
+//   params: {
+//     date
+//   }
+// })
 
-axios({
-  method: 'get',
-  url: '/base/get',
-  params: {
-    foo: '@:$, '
-  }
-})
-let bak
-axios({
-  method: 'get',
-  url: '/base/get',
-  params: {
-    foo: 'bar',
-    baz: null,
-    bak: bak,
-    bay: 1
-  }
-})
+// axios({
+//   method: 'get',
+//   url: '/base/get',
+//   params: {
+//     foo: '@:$, '
+//   }
+// })
+// let bak
+// axios({
+//   method: 'get',
+//   url: '/base/get',
+//   params: {
+//     foo: 'bar',
+//     baz: null,
+//     bak: bak,
+//     bay: 1
+//   }
+// })
 
-axios({
-  method: 'get',
-  url: '/base/get#hash',
-  params: {
-    foo: 'bar'
-  }
-})
+// axios({
+//   method: 'get',
+//   url: '/base/get#hash',
+//   params: {
+//     foo: 'bar'
+//   }
+// })
 
-axios({
-  method: 'get',
-  url: '/base/get?foo=bar',
-  params: {
-    bar: 'baz'
-  }
-})
+// axios({
+//   method: 'get',
+//   url: '/base/get?foo=bar',
+//   params: {
+//     bar: 'baz'
+//   }
+// })
 
 //
 // axios({
 //   method: 'post',
 //   url: '/base/post',
+//   // headers: {
+//   //   'content-type': 'application/json;charset=utf-8'
+//   // },
 //   data: {
 //     a: 1,
 //     b: 2
 //   }
 // })
-//
+
 // const arr = new Int32Array([21.32])
 // axios({
 //   method: 'post',
 //   url: '/base/buffer',
+//   // headers: { // !这里不会自动删除，想自动删除需要另外处理
+//   //   'content-type': 'application/json;charset=utf-8'
+//   // },
 //   data: arr
 // })
 //
-// axios({
-//   method: 'post',
-//   url: '/base/post',
-//   data: {
-//     a: 1,
-//     b: 2
-//   }
-// })
-//
-// axios({
-//   method: 'post',
-//   url: '/base/post',
-//   headers: {
-//     'content-type': 'application/json',
-//     'Accept': 'application/json, text/plain, */*'
-//   },
-//   data: {
-//     a: 1,
-//     b: 2
-//   }
-// })
-//
-// const paramsString = 'q=URLUtils.searchParams&topic=api'
-// const searchParams = new URLSearchParams(paramsString)
-//
-// axios({
-//   method: 'post',
-//   url: '/base/post',
-//   data: searchParams
-// })
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+axios({
+  method: 'post',
+  url: '/base/post',
+  headers: {
+    'content-type': 'application/json',
+    'Accept': 'application/json, text/plain, */*'
+  },
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+const paramsString = 'q=URLUtils.searchParams&topic=api'
+const searchParams = new URLSearchParams(paramsString)
+
+// const formData = new FormData()
+// formData.append('procId', 'a1')
+
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: searchParams
+})
 
 
 // axios({

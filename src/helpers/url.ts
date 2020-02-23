@@ -1,8 +1,8 @@
-import {isDate,isObject} from './util'
+import {isDate,isPlainObject} from './util'
 
 // 对URL进行编码
 function encode(val: string): string {
-  //return val
+  // return val
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
     .replace(/%3A/gi, ':')
@@ -26,16 +26,16 @@ export function buildURL(url:string,params?:any):string{
     let values = []
     if (Array.isArray(val)) {
       values = val
-      key = key + '[]'   //! foo: ['bar', 'baz']  url 是 /base/get?foo[]=bar&foo[]=baz'。
+      key = key + '[]'   // ! foo: ['bar', 'baz']  url 是 /base/get?foo[]=bar&foo[]=baz'。
     } else {
       values = [val]
     }
 
     values.forEach((val) => { // !这里其实params[key]  为数组 的才需要遍历多个  ，其他的只有一次遍历
       if (isDate(val)) {
-        //val = (val as Date).toISOString()
+        // val = (val as Date).toISOString()
         val = val.toISOString()
-      } else if(isObject(val)) {
+      } else if(isPlainObject(val)) {
         // !这个val 也有可能是数组的  例如 params[key]为  [[1],[2]]   在这里还是直接JSON.stringify掉
         val = JSON.stringify(val)
       }

@@ -126,5 +126,8 @@
     "express": "^4.16.4",
     "body-parser": "^1.18.3"
   },
-  "__npminstall_done": false
+  "__npminstall_done": false,
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
 }
