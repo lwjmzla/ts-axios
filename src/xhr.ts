@@ -1,14 +1,19 @@
 
 import {AxiosRequestConfig,AxiosPromise,AxiosResponse} from './types'
 import {isPlainObject} from './helpers/util'
-import { resolve } from 'url';
+import { createError } from './helpers/error'
+// import { resolve } from 'url';
 function xhr(config: AxiosRequestConfig):AxiosPromise{
   return new Promise((resolve,reject) => {
-    const {data = null,url,method = 'get',headers,responseType} = config // !这里的data是转换后的 string了
+    const {data = null,url,method = 'get',headers,responseType,timeout} = config // !这里的data是转换后的 string了
     const request = new XMLHttpRequest()
 
     if (responseType) {
       request.responseType = responseType
+    }
+
+    if (timeout) {
+      request.timeout = timeout
     }
 
     request.open(method.toUpperCase(),url,true)
@@ -22,6 +27,10 @@ function xhr(config: AxiosRequestConfig):AxiosPromise{
         //   // eslint-disable-next-line
         //   reject('出错了')
         // }
+        if (request.status === 0) { // !网络错误或者超时
+          // console.log(request.status, 1111)
+          return
+        }
         const responseHeaders = request.getAllResponseHeaders()
         // console.log(responseHeaders.split('\r\n'))
         let arr = responseHeaders.split('\r\n') // !有回车 和 换行符
@@ -45,9 +54,16 @@ function xhr(config: AxiosRequestConfig):AxiosPromise{
           config,
           request
         }
-        resolve(response)
+        handleResponse(response)
       }
     };
+
+    request.onerror = function() { // !网络错误
+      reject(createError('Network Error',config,null,request))
+    }
+    request.ontimeout = function() {
+      reject(createError(`Timeout of ${timeout} ms exceeded`,config,'ECONNABORTED',request))
+    }
 
     Object.keys(headers).forEach((name) => {
       if (data === null && name.toLowerCase() === 'content-type') { // !这种相当于get情况的时候没data的，人家手动设置 也删除
@@ -60,6 +76,14 @@ function xhr(config: AxiosRequestConfig):AxiosPromise{
     })
 
     request.send(data)
+
+    function handleResponse(response: AxiosResponse) {
+      if (response.status >= 200 && response.status < 300) {
+        resolve(response)
+      } else {
+        reject(createError(`Request failed with status code ${response.status}`,config,null,request,response))
+      }
+    }
   })
 }
 export default xhr
