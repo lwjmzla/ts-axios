@@ -17,7 +17,7 @@ export type Method =
 
 // axios请求参数接口
 export interface AxiosRequestConfig {
-  url: string;
+  url?: string;
   method?: Method;
   data?: any;
   params?: any;
@@ -45,4 +45,26 @@ export interface AxiosError extends Error {
   request?: any
   response?: AxiosResponse
   isAxiosError: boolean
+}
+
+export interface Axios {
+  request(config: AxiosRequestConfig): AxiosPromise
+
+  get(url: string, config?: AxiosRequestConfig): AxiosPromise
+
+  // delete(url: string, config?: AxiosRequestConfig): AxiosPromise
+
+  // head(url: string, config?: AxiosRequestConfig): AxiosPromise
+
+  // options(url: string, config?: AxiosRequestConfig): AxiosPromise
+
+  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+
+  // put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+
+  // patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+}
+
+export interface AxiosInstance extends Axios {  // !但拓展了Axios 就成 混合类型接口
+  (config: AxiosRequestConfig): AxiosPromise // !原本这种属于函数类型接口
 }

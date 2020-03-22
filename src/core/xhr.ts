@@ -1,7 +1,7 @@
 
-import {AxiosRequestConfig,AxiosPromise,AxiosResponse} from './types'
-import {isPlainObject} from './helpers/util'
-import { createError } from './helpers/error'
+import {AxiosRequestConfig,AxiosPromise,AxiosResponse} from '../types'
+import {isPlainObject} from '../helpers/util'
+import { createError } from '../helpers/error'
 // import { resolve } from 'url';
 function xhr(config: AxiosRequestConfig):AxiosPromise{
   return new Promise((resolve,reject) => {
@@ -16,7 +16,7 @@ function xhr(config: AxiosRequestConfig):AxiosPromise{
       request.timeout = timeout
     }
 
-    request.open(method.toUpperCase(),url,true)
+    request.open(method.toUpperCase(),url!,true)
 
     request.onreadystatechange = function() {
       if (request.readyState === 4) {

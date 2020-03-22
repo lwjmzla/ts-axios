@@ -22,7 +22,7 @@ export class AxiosError extends Error {
     this.response = response
     this.isAxiosError = true
 
-    Object.setPrototypeOf(this, AxiosError.prototype)
+    Object.setPrototypeOf(this, AxiosError.prototype) // !Extending built-ins like Error, Array, and Map扩展这些 需要这行代码，否则会报错
   }
 }
 
