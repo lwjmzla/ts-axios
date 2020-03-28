@@ -52,17 +52,17 @@ export interface Axios {
 
   get(url: string, config?: AxiosRequestConfig): AxiosPromise
 
-  // delete(url: string, config?: AxiosRequestConfig): AxiosPromise
+  delete(url: string, config?: AxiosRequestConfig): AxiosPromise
 
-  // head(url: string, config?: AxiosRequestConfig): AxiosPromise
+  head(url: string, config?: AxiosRequestConfig): AxiosPromise
 
-  // options(url: string, config?: AxiosRequestConfig): AxiosPromise
+  options(url: string, config?: AxiosRequestConfig): AxiosPromise
 
   post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
 
-  // put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
 
-  // patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
 }
 
 export interface AxiosInstance extends Axios {  // !但拓展了Axios 就成 混合类型接口
