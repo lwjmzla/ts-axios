@@ -18,6 +18,7 @@ import {extend} from './helpers/util'
 function createInstance():AxiosInstance {
   let context = new Axios()
   let axiosInstance = Axios.prototype.request.bind(context) // !bind不会立即调用  .bind(context)其实就是 指定类型     new Axios()才有  get post方法
+  // !上面一行 是一个函数，而且有函数重载 有2种传参方式
   extend(axiosInstance,context)
   return axiosInstance
 }

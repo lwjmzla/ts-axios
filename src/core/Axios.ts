@@ -1,7 +1,18 @@
 import dispatchRequest from './dispatchRequest'
 import {AxiosRequestConfig,AxiosPromise} from '../types'
 export default class Axios {
-  request(config: AxiosRequestConfig): AxiosPromise{
+  request(url: string | AxiosRequestConfig, config?: AxiosRequestConfig): AxiosPromise{
+    // !这里url是any因为要应对2种情况 case1. axios.request 只能传config，因此用url来接收传入的config
+    // !case2.  axios('url', config)   这个url就是string
+    // todo  判断这个url的类型
+    if (typeof url === 'string') {
+      if (!config) {
+        config = {}
+      }
+      config.url = url
+    } else {
+      config = url as AxiosRequestConfig
+    }
     return dispatchRequest(config)
   }
 
