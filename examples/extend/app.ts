@@ -53,3 +53,24 @@ let fn: FnMore = (age: number | string,name?: string): string => {
 	}
 }
 console.log(fn('lwj'))
+
+interface ResponseData<T = any>{
+	code: number,
+	result: T, // !一般这里就不用泛型了，比较随意就好
+	message: string
+}
+interface User{
+	name: string,
+	age: number
+}
+function axiosGet<T = any>(url:string) {
+	return axios.get<ResponseData<T>>(url) // !通过泛型的方式嵌套接口
+	// return axios<ResponseData<T>>(url)
+}
+axiosGet<User>('/extend/user').then((res) => {
+	console.log(res.data.message)
+	console.log(res.data.code)
+	console.log(res.data.result)
+	console.log(res.data.result.name)
+	console.log(res.data.result.age)
+})
