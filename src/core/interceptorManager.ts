@@ -13,6 +13,7 @@ export default class InterceptorManager<T> {
   }
 
   use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number {
+    // !resolved rejected 最外面调用时传入进来。
     this.interceptors.push({
       resolved,
       rejected
@@ -20,7 +21,8 @@ export default class InterceptorManager<T> {
     return this.interceptors.length - 1
   }
 
-  forEach(fn: (interceptor: Interceptor<T>) => void): void { // !其实没错的，想去除的话 直接复制接口 进来
+  forEach(fn: (interceptor: Interceptor<T>) => void): void {
+    // !其实没错的，想去除的话 直接复制接口 进来
     this.interceptors.forEach(interceptor => {
       if (interceptor !== null) {
         fn(interceptor)

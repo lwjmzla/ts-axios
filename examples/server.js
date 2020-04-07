@@ -73,6 +73,13 @@ router.get('/error/timeout', function(req, res) {
 
 registerExtendRouter()
 
+router.get('/interceptor/get', function(req, res) {
+  // res.json({
+  //   msg: `hello world`
+  // })
+  res.send('abc')
+})
+
 app.use(router)
 
 const port = process.env.PORT || 8081

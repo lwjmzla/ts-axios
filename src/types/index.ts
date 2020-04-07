@@ -17,13 +17,13 @@ export type Method =
 
 // axios请求参数接口
 export interface AxiosRequestConfig {
-  url?: string;
-  method?: Method;
-  data?: any;
-  params?: any;
-  headers?: any;
-  responseType?: XMLHttpRequestResponseType;
-  timeout?: number;
+  url?: string
+  method?: Method
+  data?: any
+  params?: any
+  headers?: any
+  responseType?: XMLHttpRequestResponseType
+  timeout?: number
 }
 
 export interface AxiosResponse<T = any> {
@@ -35,8 +35,8 @@ export interface AxiosResponse<T = any> {
   request: any
 }
 
-export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> { // ! 类型  是 Promise<AxiosResponse> resolve值类型 AxiosResponse
-
+export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {
+  // ! 类型  是 Promise<AxiosResponse> resolve值类型 AxiosResponse
 }
 
 export interface AxiosError extends Error {
@@ -48,6 +48,12 @@ export interface AxiosError extends Error {
 }
 
 export interface Axios {
+  interceptors: {
+    // !拦截器用的
+    request: AxiosInterceptorManager<AxiosRequestConfig>
+    response: AxiosInterceptorManager<AxiosResponse>
+  }
+
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
@@ -65,9 +71,10 @@ export interface Axios {
   patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
-export interface AxiosInstance extends Axios {  // !但拓展了Axios 就成 混合类型接口
-  <T = any>(config: AxiosRequestConfig): AxiosPromise<T>; // !原本这种属于函数类型接口
-  <T = any>(url: string,config?: AxiosRequestConfig): AxiosPromise<T>; // !和上一行  相当于函数重载
+export interface AxiosInstance extends Axios {
+  // !但拓展了Axios 就成 混合类型接口
+  <T = any>(config: AxiosRequestConfig): AxiosPromise<T> // !原本这种属于函数类型接口
+  <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T> // !和上一行  相当于函数重载
 }
 
 // !拦截器  axios.interceptors.request.use/eject  axios.interceptors.response.use/eject
@@ -77,7 +84,7 @@ export interface AxiosInterceptorManager<T> {
   eject(id: number): void // !删除拦截器
 }
 
-export interface ResolvedFn<T=any> {
+export interface ResolvedFn<T = any> {
   (val: T): T | Promise<T>
 }
 
