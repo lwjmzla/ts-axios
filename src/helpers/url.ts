@@ -36,7 +36,6 @@ export function buildURL(url:string,params?:any):string{
         // val = (val as Date).toISOString()
         val = val.toISOString()
       } else if(isPlainObject(val)) {
-        // !这个val 也有可能是数组的  例如 params[key]为  [[1],[2]]   在这里还是直接JSON.stringify掉
         val = JSON.stringify(val)
       }
       parts.push(`${encode(key)}=${encode(val)}`)

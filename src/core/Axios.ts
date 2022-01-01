@@ -1,6 +1,8 @@
 import dispatchRequest from './dispatchRequest'
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse, ResolvedFn, RejectedFn } from '../types'
 import InterceptorManager from './interceptorManager'
+import {mergeDeep} from '../helpers/util'
+import {flattenHeaders} from '../helpers/headers'
 
 interface Interceptors {
   request: InterceptorManager<AxiosRequestConfig> // !这里是class
@@ -14,7 +16,9 @@ interface PromiseChain {
 
 export default class Axios {
   interceptors: Interceptors
-  constructor() {
+  defaults: AxiosRequestConfig
+  constructor(initConfig: AxiosRequestConfig) {
+    this.defaults = initConfig
     this.interceptors = {
       request: new InterceptorManager<AxiosRequestConfig>(), // !只实例化了一次，每次 axios.interceptors.request.use  里面 的this.interceptors都push
       response: new InterceptorManager<AxiosResponse>()
@@ -33,6 +37,12 @@ export default class Axios {
     } else {
       config = url as AxiosRequestConfig
     }
+    // !flatten正确的Headers
+    const headers = flattenHeaders(this.defaults.headers, config.method || 'get')
+    const defaultConfig = {...this.defaults}
+    defaultConfig.headers = headers
+
+    config = mergeDeep(defaultConfig,config) 
 
     const chain: PromiseChain[] = [
       {
@@ -58,8 +68,8 @@ export default class Axios {
       promise = promise.then(resolved, rejected) // ! request拦截器 - 自己的dispatchRequest - response拦截器
     }
     // return dispatchRequest(config)
-    return promise // !其实最终拦截完  很可能 结构 有可能不是  AxiosPromise的 所以这里 提醒是对的
-    // return promise as AxiosPromise  // !这样ts不报错
+    // return promise // !其实最终拦截完  很可能 结构 有可能不是  AxiosPromise的 所以这里 提醒是对的
+    return promise as AxiosPromise  // !这样ts不报错
   }
 
   get(url: string, config?: AxiosRequestConfig): AxiosPromise {
@@ -69,7 +79,7 @@ export default class Axios {
       url,
       method: 'get'
     }
-    return dispatchRequest(config)
+    return this.request(config)
   }
 
   post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
@@ -80,7 +90,7 @@ export default class Axios {
       method: 'post',
       data
     }
-    return dispatchRequest(config)
+    return this.request(config)
   }
 
   delete(url: string, config?: AxiosRequestConfig): AxiosPromise {
@@ -90,7 +100,7 @@ export default class Axios {
       url,
       method: 'delete'
     }
-    return dispatchRequest(config)
+    return this.request(config)
   }
   head(url: string, config?: AxiosRequestConfig): AxiosPromise {
     config = config || {}
@@ -99,7 +109,7 @@ export default class Axios {
       url,
       method: 'head'
     }
-    return dispatchRequest(config)
+    return this.request(config)
   }
   options(url: string, config?: AxiosRequestConfig): AxiosPromise {
     config = config || {}
@@ -108,7 +118,7 @@ export default class Axios {
       url,
       method: 'options'
     }
-    return dispatchRequest(config)
+    return this.request(config)
   }
 
   put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
@@ -119,7 +129,7 @@ export default class Axios {
       method: 'put',
       data
     }
-    return dispatchRequest(config)
+    return this.request(config)
   }
   patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
     config = config || {}
@@ -129,6 +139,6 @@ export default class Axios {
       method: 'patch',
       data
     }
-    return dispatchRequest(config)
+    return this.request(config)
   }
 }

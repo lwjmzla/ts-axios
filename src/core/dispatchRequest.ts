@@ -6,7 +6,7 @@
   import {transformRequest} from '../helpers/data'
   import {processHeaders} from '../helpers/headers'
   import xhr from './xhr'
-  function axios(config: AxiosRequestConfig):AxiosPromise{
+  function dispatchRequest(config: AxiosRequestConfig):AxiosPromise{
     processConfig(config)
     return xhr(config)
   }
@@ -31,4 +31,4 @@
     return processHeaders(headers,data)
   }
   
-  export default axios
+  export default dispatchRequest

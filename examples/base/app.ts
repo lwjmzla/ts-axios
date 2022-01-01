@@ -101,39 +101,39 @@ import axios from '../../src/index'
 //   data: arr
 // })
 //
-axios({
-	method: 'post',
-	url: '/base/post',
-	data: {
-		a: 1,
-		b: 2
-	}
-})
+// axios({
+// 	method: 'post',
+// 	url: '/base/post',
+// 	data: {
+// 		a: 1,
+// 		b: 2
+// 	}
+// })
 
-axios({
-	method: 'post',
-	url: '/base/post',
-	headers: {
-		'content-type': 'application/json',
-		'Accept': 'application/json, text/plain, */*'
-	},
-	data: {
-		a: 1,
-		b: 2
-	}
-})
+// axios({
+// 	method: 'post',
+// 	url: '/base/post',
+// 	headers: {
+// 		'content-type': 'application/json',
+// 		'Accept': 'application/json, text/plain, */*'
+// 	},
+// 	data: {
+// 		a: 1,
+// 		b: 2
+// 	}
+// })
 
-const paramsString = 'q=URLUtils.searchParams&topic=api'
-const searchParams = new URLSearchParams(paramsString)
+// const paramsString = 'q=URLUtils.searchParams&topic=api'
+// const searchParams = new URLSearchParams(paramsString)
 
-// const formData = new FormData()
-// formData.append('procId', 'a1')
+// // const formData = new FormData()
+// // formData.append('procId', 'a1')
 
-axios({
-	method: 'post',
-	url: '/base/post',
-	data: searchParams
-})
+// axios({
+// 	method: 'post',
+// 	url: '/base/post',
+// 	data: searchParams
+// })
 
 
 axios({
@@ -168,49 +168,49 @@ axios({
 // 	const v = await t1(); // 这里可以根据 Promise<number> 推断出 v 是 number 型
 // })();
 
-interface ClockConstructor<T> {
-	new (hour: number, minute: number): T;
-}
-interface ClockInterface {
-	tick(): void;
-}
+// interface ClockConstructor<T> {
+// 	new (hour: number, minute: number): T;
+// }
+// interface ClockInterface {
+// 	tick(): void;
+// }
 
-function createClock(ctor: ClockConstructor<ClockInterface>, hour: number, minute: number): ClockInterface {
-	return new ctor(hour, minute);
-}
+// function createClock(ctor: ClockConstructor<ClockInterface>, hour: number, minute: number): ClockInterface {
+// 	return new ctor(hour, minute);
+// }
 
-class DigitalClock implements ClockInterface {
-	constructor(public h: number,public m: number) {
-		console.log(this.h)
-	}
-	tick() {
-		console.log('beep beep');
-	}
-}
-class AnalogClock implements ClockInterface {
-	constructor(public h: number,public m: number) {
-		console.log(this.h)
-	}
-	tick() {
-		console.log('tick tock');
-	}
-}
+// class DigitalClock implements ClockInterface {
+// 	constructor(public h: number,public m: number) {
+// 		console.log(this.h)
+// 	}
+// 	tick() {
+// 		console.log('beep beep');
+// 	}
+// }
+// class AnalogClock implements ClockInterface {
+// 	constructor(public h: number,public m: number) {
+// 		console.log(this.h)
+// 	}
+// 	tick() {
+// 		console.log('tick tock');
+// 	}
+// }
 
-let digital = createClock(DigitalClock, 12, 17);
-let analog = createClock(AnalogClock, 7, 32);
-digital.tick()
+// let digital = createClock(DigitalClock, 12, 17);
+// let analog = createClock(AnalogClock, 7, 32);
+// digital.tick()
 
 
-class Clock {
-	currentTime: Date = new Date(); // 给默认值
-	constructor() {
-		console.log(this.currentTime)
-	}
-	tick() {
-		console.log('tick tock');
-	}
-}
-function createConstru<T>(ctor: { new (): T }): T { // 这种类型接口 意味着是构造函数的意思
-	return new ctor();
-}
-createConstru<ClockInterface>(Clock);
+// class Clock {
+// 	currentTime: Date = new Date(); // 给默认值
+// 	constructor() {
+// 		console.log(this.currentTime)
+// 	}
+// 	tick() {
+// 		console.log('tick tock');
+// 	}
+// }
+// function createConstru<T>(ctor: { new (): T }): T { // 这种类型接口 意味着是构造函数的意思
+// 	return new ctor();
+// }
+// createConstru<ClockInterface>(Clock);

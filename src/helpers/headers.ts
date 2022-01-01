@@ -1,4 +1,5 @@
 import {isPlainObject} from './util'
+import { Method } from '../types'
 
 function normalizeHeaderName (headers: any, normalizedName: string): void {
 	if (!headers) {
@@ -20,4 +21,14 @@ export function processHeaders (headers: any,data: any): any {
 		}
 	}
 	return headers
+}
+
+export function flattenHeaders(headers: any = {}, method: Method) {
+	// todo处理 common method的headers  然后删除多余的
+	const commonHeaders = headers.common
+	const methodHeaders = headers[method]
+	return {
+		...commonHeaders,
+		...methodHeaders
+	}
 }
