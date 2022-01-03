@@ -27,3 +27,10 @@ function createInstance(defaults: AxiosRequestConfig): AxiosInstance {
 
 const axios = createInstance(defaults)
 export default axios
+
+// !执行顺序如下
+// !axios.interceptors.request.use  
+// !axios.defaults.transformRequest 
+// !axios.defaults.transformResponse
+// !axios.interceptors.response.use 
+

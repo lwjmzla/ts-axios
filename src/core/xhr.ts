@@ -39,13 +39,14 @@ function xhr(config: AxiosRequestConfig):AxiosPromise{
         let responseHeadersObj = arr.map((item) => item.split(': ')).reduce((o:any, [k, v]) => (o[k] = v, o), {})
         // console.log(responseHeadersObj)
         let responseData = responseType && responseType !== 'text' ? request.response : request.responseText
-        if (typeof responseData === 'string') {
-          try {
-            responseData = JSON.parse(responseData)
-          } catch (e) {
-            // 不管
-          }
-        }
+        // !responseData的处理在dispatchRequest.ts处理
+        // if (typeof responseData === 'string') {
+        //   try {
+        //     responseData = JSON.parse(responseData)
+        //   } catch (e) {
+        //     // 不管
+        //   }
+        // }
         const response: AxiosResponse = {
           data: responseData,
           status: request.status,
