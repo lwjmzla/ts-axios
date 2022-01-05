@@ -82,6 +82,10 @@ export interface AxiosInstance extends Axios {
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T> // !和上一行  相当于函数重载
 }
 
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance;
+}
+
 // !拦截器  axios.interceptors.request.use/eject  axios.interceptors.response.use/eject
 export interface AxiosInterceptorManager<T> {
   use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number

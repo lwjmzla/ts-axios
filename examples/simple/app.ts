@@ -1,61 +1,32 @@
 import axios, {AxiosTransformer} from '../../src/index'
 
-// axios({
-//   method: 'get',
-//   url: '/simple/get',
-//   params: {
-//     a: 1,
-//     b: 2
-//   }
-// })
-
-// axios({
-//   method: 'get',
-//   url: '/simple/get',
-//   params: {
-//     a: 1,
-//     b: 2
-//   }
-// }).then((res) => {
-//   console.log(res)
-// })
-
-// axios.get('/simple/get',{
-//   params: {
-//     a: 1,
-//     b: 2
-//   }
-// }).then((res) => {
-//   console.log(res)
-// })
 axios.defaults.headers.common.test = 123
 
-axios.interceptors.request.use(config => {
+const instance = axios.create({
+  headers: {
+    name: 'lwj'
+  }
+})
+const instance1 = axios.create({
+  headers: {
+    age: 18
+  }
+})
+
+instance.interceptors.request.use(config => {
   console.log(1)
   config.headers['AUTH-TOKEN'] = 'token';
   config.data.currentUserId = 'currentUserId';
   return config
 })
 
-axios.interceptors.response.use(res => {
+instance.interceptors.response.use(res => {
   console.log(4)
   res.data.c = 3
   return res
 })
 
-// axios({
-//   method: 'get',
-//   url: '/base/get',
-//   params: {
-//     foo: ['bar', 'baz']
-//   },
-//   headers: {
-//     'content-type': 'application/json;charset=utf-8',
-//     test1: '456'
-//   },
-// })
-
-axios({
+instance({
 	method: 'post',
 	url: '/base/post',
 	data: {
@@ -85,6 +56,17 @@ axios({
   console.log(res.data)
 }).catch((err) => {
   console.log(err)
+})
+
+instance1({
+	method: 'post',
+	url: '/base/post',
+	data: {
+		a: 1,
+		b: 2
+	},
+  headers: {
+  },
 })
 
 // !执行顺序如下
