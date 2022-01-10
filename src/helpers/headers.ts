@@ -28,7 +28,7 @@ export function flattenHeaders(headers: any = {}, method: Method) {
 	const commonHeaders = headers.common
 	const methodHeaders = headers[method]
 	return {
+		...methodHeaders,
 		...commonHeaders,
-		...methodHeaders
 	}
 }

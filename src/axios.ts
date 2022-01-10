@@ -3,6 +3,7 @@ import { AxiosInstance, AxiosRequestConfig, AxiosStatic } from './types' // !混
 import Axios from './core/Axios'
 import { extend,mergeDeep,isPlainObject } from './helpers/util'
 import defaults from './defaults'
+import CancelToken from './cancel/CancelToken'
 
 function createInstance(defaults: AxiosRequestConfig): AxiosStatic {
   let context = new Axios(defaults)
@@ -27,6 +28,8 @@ axios.create = function(config: AxiosRequestConfig = {}): AxiosInstance {
    // !createInstance参数里的config.headers是未处理过的那种，就是defaults.headers，所以传入的config.headers需要转换
   return createInstance(mergeDeep(this.defaults,config))
 }
+
+axios.CancelToken = CancelToken
 
 export default axios
 

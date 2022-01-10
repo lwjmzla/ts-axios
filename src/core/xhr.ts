@@ -5,7 +5,7 @@ import { createError } from '../helpers/error'
 // import { resolve } from 'url';
 function xhr(config: AxiosRequestConfig):AxiosPromise{
   return new Promise((resolve,reject) => {
-    const {data = null,url,method = 'get',headers,responseType,timeout} = config // !这里的data是转换后的 string了
+    const {data = null,url,method = 'get',headers,responseType,timeout, cancelToken} = config // !这里的data是转换后的 string了
     const request = new XMLHttpRequest()
 
     if (responseType) {
@@ -75,6 +75,13 @@ function xhr(config: AxiosRequestConfig):AxiosPromise{
         request.setRequestHeader(name, headers[name])
       }
     })
+
+    if (cancelToken) {
+      cancelToken.promise.then((reason) => {
+        request.abort()
+        reject(reason)
+      })
+    }
 
     request.send(data)
 
