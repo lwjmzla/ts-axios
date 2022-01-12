@@ -1,9 +1,10 @@
 
-import { AxiosInstance, AxiosRequestConfig, AxiosStatic } from './types' // !混合类型
+import { AxiosInstance, AxiosRequestConfig, AxiosStatic, CancelTokenStatic } from './types' // !混合类型
 import Axios from './core/Axios'
 import { extend,mergeDeep,isPlainObject } from './helpers/util'
 import defaults from './defaults'
 import CancelToken from './cancel/CancelToken'
+import Cancel, {isCancel} from './cancel/Cancel'
 
 function createInstance(defaults: AxiosRequestConfig): AxiosStatic {
   let context = new Axios(defaults)
@@ -29,7 +30,9 @@ axios.create = function(config: AxiosRequestConfig = {}): AxiosInstance {
   return createInstance(mergeDeep(this.defaults,config))
 }
 
-axios.CancelToken = CancelToken
+axios.CancelToken = CancelToken as unknown as CancelTokenStatic // !as unknown as作用相当于强制转换类型吧
+axios.Cancel = Cancel
+axios.isCancel = isCancel
 
 export default axios
 
