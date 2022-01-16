@@ -1,4 +1,5 @@
 import axios from '../../src/index'
+import qs from 'qs'
 // import axios from 'axios'
 
 // axios({
@@ -50,17 +51,23 @@ import axios from '../../src/index'
 //     foo: '@:$, '
 //   }
 // })
-// let bak
-// axios({
-//   method: 'get',
-//   url: '/base/get',
-//   params: {
-//     foo: 'bar',
-//     baz: null,
-//     bak: bak,
-//     bay: 1
-//   }
-// })
+// const paramsString = 'q=URLUtils.searchParams&topic=api'
+// const searchParams = new URLSearchParams(paramsString)
+let bak
+axios({
+  method: 'get',
+  url: '/base/get?name=lwj#hash',
+  params: {
+    foo: 'bar',
+    baz: null,
+    bak: bak,
+    bay: 1
+  },
+  paramsSerializer(params) {
+    return qs.stringify(params)
+  }
+  //params: new URLSearchParams('q=URLUtils.searchParams&topic=api')
+})
 
 // axios({
 //   method: 'get',
@@ -136,28 +143,28 @@ import axios from '../../src/index'
 // })
 
 
-axios({
-	method: 'post',
-	url: '/base/post',
-	data: {
-		a: 1,
-		b: 2
-	}
-}).then((res) => {
-	console.log(res)
-})
+// axios({
+// 	method: 'post',
+// 	url: '/base/post',
+// 	data: {
+// 		a: 1,
+// 		b: 2
+// 	}
+// }).then((res) => {
+// 	console.log(res)
+// })
 
-axios({
-	method: 'post',
-	url: '/base/post',
-	responseType: 'json',
-	data: {
-		a: 3,
-		b: 4
-	}
-}).then((res) => {
-	console.log(res)
-})
+// axios({
+// 	method: 'post',
+// 	url: '/base/post',
+// 	responseType: 'json',
+// 	data: {
+// 		a: 3,
+// 		b: 4
+// 	}
+// }).then((res) => {
+// 	console.log(res)
+// })
 
 
 // function t1(): Promise<number> {

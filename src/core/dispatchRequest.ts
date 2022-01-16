@@ -20,8 +20,8 @@ function processConfig(config: AxiosRequestConfig):void{ // !这个processConfig
 }
 
 function transformURL(config: AxiosRequestConfig):string{
-  const {url,params} = config
-  return buildURL(url!,params) // !非空断言
+  const {url,params,paramsSerializer} = config
+  return buildURL(url!,params,paramsSerializer) // !非空断言
 }
 
 // function transformRequestData(config: AxiosRequestConfig):any{

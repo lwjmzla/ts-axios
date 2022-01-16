@@ -30,6 +30,7 @@ export interface AxiosRequestConfig {
   withCredentials?: boolean
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
+  paramsSerializer?: (params: any) => string
 
   [propName: string]: any
 }
