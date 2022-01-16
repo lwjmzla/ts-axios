@@ -12,6 +12,10 @@ export function isPlainObject(val:any):val is object{ // !真正的普通对象
   return toString.call(val) === '[object Object]'
 }
 
+export function isFormData(val:any):val is FormData{
+  return val instanceof FormData
+}
+
 export function extend<T, U>(to: T,from : U): T & U {
   for (const key in from) {
     ;(to as T & U)[key] = from[key] as any

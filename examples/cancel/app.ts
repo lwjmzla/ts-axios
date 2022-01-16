@@ -43,5 +43,5 @@ instance({
   console.log(err)
 })
 
-cancel('ajax cancel')
-
+cancel('ajax cancel1')
+cancel('ajax cancel2')

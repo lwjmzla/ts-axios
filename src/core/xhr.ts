@@ -1,11 +1,12 @@
 
 import {AxiosRequestConfig,AxiosPromise,AxiosResponse} from '../types'
-import {isPlainObject} from '../helpers/util'
+import {isPlainObject, isFormData} from '../helpers/util'
 import { createError } from '../helpers/error'
 // import { resolve } from 'url';
 function xhr(config: AxiosRequestConfig):AxiosPromise{
   return new Promise((resolve,reject) => {
-    const {data = null,url,method = 'get',headers,responseType,timeout, cancelToken} = config // !这里的data是转换后的 string了
+    const {data = null,url,method = 'get',headers,responseType,timeout, cancelToken, withCredentials, 
+    onDownloadProgress, onUploadProgress} = config // !这里的data是转换后的 string了
     const request = new XMLHttpRequest()
 
     if (responseType) {
@@ -14,6 +15,10 @@ function xhr(config: AxiosRequestConfig):AxiosPromise{
 
     if (timeout) {
       request.timeout = timeout
+    }
+
+    if (withCredentials) {
+      request.withCredentials = withCredentials
     }
 
     request.open(method.toUpperCase(),url!,true)
@@ -64,6 +69,18 @@ function xhr(config: AxiosRequestConfig):AxiosPromise{
     }
     request.ontimeout = function() {
       reject(createError(`Timeout of ${timeout} ms exceeded`,config,'ECONNABORTED',request))
+    }
+
+    if (onDownloadProgress) {
+      request.onprogress = onDownloadProgress
+    }
+
+    if (onUploadProgress) {
+      request.upload.onprogress = onUploadProgress
+    }
+
+    if (isFormData(data)) {
+      delete headers['Content-Type']
     }
 
     Object.keys(headers).forEach((name) => {

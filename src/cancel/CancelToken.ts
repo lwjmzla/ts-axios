@@ -16,7 +16,7 @@ export default class CancelToken{
     })
 
     executor((message?: string) =>{
-      if (this.reason) {
+      if (this.reason) { // !防止执行多次cancel
         return
       }
       this.reason = new Cancel(message)
