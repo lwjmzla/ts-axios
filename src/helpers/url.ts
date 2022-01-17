@@ -63,3 +63,9 @@ export function buildURL(url:string,params?:any,paramsSerializer?: (params: any)
   
   return newUrl
 }
+
+export const isAbsoluteURL = (url: string) => /^[a-z][a-z0-9+.-]*:/.test(url); // httpxxxxx
+
+export function combineURL(baseURL: string, relativeURL?: string): string {
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL
+}
