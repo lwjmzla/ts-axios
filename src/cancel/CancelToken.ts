@@ -1,22 +1,23 @@
-import {CancelExecutor,CancelTokenSource,Canceler} from '../types'
+import { CancelExecutor, CancelTokenSource, Canceler, CancelTokenStatic } from '../types'
 import Cancel from './Cancel'
 
-interface ResolvePromise{
+interface ResolvePromise {
   (reason?: Cancel): void
 }
 
-export default class CancelToken{
+const CancelToken: CancelTokenStatic = class CancelToken {
   promise: Promise<Cancel>
   reason?: Cancel
 
-  constructor(executor: CancelExecutor){
-    let resolvePromise:ResolvePromise
-    this.promise = new Promise((resolve) => {
+  constructor(executor: CancelExecutor) {
+    let resolvePromise: ResolvePromise
+    this.promise = new Promise(resolve => {
       resolvePromise = resolve as ResolvePromise
     })
 
-    executor((message?: string) =>{
-      if (this.reason) { // !防止执行多次cancel
+    executor((message?: string) => {
+      if (this.reason) {
+        // !防止执行多次cancel
         return
       }
       this.reason = new Cancel(message)
@@ -24,9 +25,10 @@ export default class CancelToken{
     })
   }
 
-  static source():CancelTokenSource { // !静态方法
+  static source(): CancelTokenSource {
+    // !静态方法
     let cancel!: Canceler
-    const token = new CancelToken((c) => {
+    const token = new CancelToken(c => {
       cancel = c
     })
     return {
@@ -35,6 +37,8 @@ export default class CancelToken{
     }
   }
 }
+
+export default CancelToken
 
 /*
   !常用使用方式

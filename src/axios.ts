@@ -1,10 +1,9 @@
-
 import { AxiosInstance, AxiosRequestConfig, AxiosStatic, CancelTokenStatic } from './types' // !混合类型
 import Axios from './core/Axios'
-import { extend,mergeDeep,isPlainObject } from './helpers/util'
+import { extend, mergeDeep, isPlainObject } from './helpers/util'
 import defaults from './defaults'
 import CancelToken from './cancel/CancelToken'
-import Cancel, {isCancel} from './cancel/Cancel'
+import Cancel, { isCancel } from './cancel/Cancel'
 
 function createInstance(defaults: AxiosRequestConfig): AxiosStatic {
   let context = new Axios(defaults)
@@ -26,19 +25,19 @@ axios.create = function(config: AxiosRequestConfig = {}): AxiosInstance {
     }
     config.headers = { common } // !把外面传入的config的headers放到common里
   }
-   // !createInstance参数里的config.headers是未处理过的那种，就是defaults.headers，所以传入的config.headers需要转换
-  return createInstance(mergeDeep(this.defaults,config))
+  // !createInstance参数里的config.headers是未处理过的那种，就是defaults.headers，所以传入的config.headers需要转换
+  return createInstance(mergeDeep(this.defaults, config))
 }
 
-axios.CancelToken = CancelToken as unknown as CancelTokenStatic // !as unknown as作用相当于强制转换类型吧
+//axios.CancelToken = CancelToken as unknown as CancelTokenStatic // !as unknown as作用相当于强制转换类型吧
+axios.CancelToken = CancelToken
 axios.Cancel = Cancel
 axios.isCancel = isCancel
 
 export default axios
 
 // !执行顺序如下
-// !axios.interceptors.request.use  
-// !axios.defaults.transformRequest 
+// !axios.interceptors.request.use
+// !axios.defaults.transformRequest
 // !axios.defaults.transformResponse
-// !axios.interceptors.response.use 
-
+// !axios.interceptors.response.use
